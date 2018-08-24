@@ -1,6 +1,6 @@
 FROM php:fpm-alpine
 
-LABEL Description="PHP FPM Docker image with OPCache, APCu, Intl., PDO MySQL, MBString, and Yaml extensions. Used for Symfony / Laravel applications." Vendor="Elliot J. Reed" Version="1.0"
+LABEL Description="PHP FPM Docker image with OPCache, APCu, Intl., PDO MySQL, MBString, and Yaml extensions." Vendor="Elliot J. Reed" Version="1.0"
 
 RUN apk add --update icu yaml && \
     apk add --no-cache --virtual .build-deps \
@@ -9,9 +9,7 @@ RUN apk add --update icu yaml && \
         icu-dev \
         g++ \
         yaml-dev && \
-    docker-php-ext-install pdo_mysql && \
-    docker-php-ext-install opcache && \
-    docker-php-ext-install mbstring && \
+    docker-php-ext-install pdo_mysql iconv opcache mbstring && \
     docker-php-ext-configure intl && \
     docker-php-ext-install intl && \
     pecl install yaml && \
