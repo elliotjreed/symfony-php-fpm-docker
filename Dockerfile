@@ -2,8 +2,7 @@ FROM php:fpm-alpine
 
 LABEL Description="PHP FPM Docker image with OPCache, APCu, Intl., PDO MySQL, MBString, and Yaml extensions. Used for Symfony / Laravel applications." Vendor="Elliot J. Reed" Version="1.0"
 
-RUN rm -f ./web/app_dev.php && \
-    apk add --update icu yaml && \
+RUN apk add --update icu yaml && \
     apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
         zlib-dev \
