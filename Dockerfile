@@ -9,7 +9,7 @@ RUN apk add --update icu yaml && \
         icu-dev \
         g++ \
         yaml-dev && \
-    docker-php-ext-install pdo_mysql iconv opcache mbstring && \
+    docker-php-ext-install bcmath pdo_mysql iconv opcache mbstring && \
     docker-php-ext-configure intl && \
     docker-php-ext-install intl && \
     pecl install yaml && \
