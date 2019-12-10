@@ -8,8 +8,9 @@ RUN apk add --update icu yaml && \
         zlib-dev \
         icu-dev \
         g++ \
+        libxml2-dev \
         yaml-dev && \
-    docker-php-ext-install bcmath pdo_mysql opcache && \
+    docker-php-ext-install bcmath pdo_mysql opcache soap && \
     docker-php-ext-configure intl && \
     docker-php-ext-install intl && \
     docker-php-ext-install sockets && \
