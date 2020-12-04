@@ -24,3 +24,14 @@ RUN apk add --update icu yaml && \
 
 RUN curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     chmod 777 /usr/local/bin/composer
+
+COPY ./php-ini-overrides.ini /usr/local/etc/php/conf.d/99-overrides.ini
+COPY ./fpm.conf /usr/local/etc/php-fpm.conf
+
+WORKDIR /var/www/html
+
+RUN chown -R www-data:www-data /var/www/html && \
+    touch /usr/local/var/log/php-fpm.log && \
+    chmod 777 /usr/local/var/log/php-fpm.log
+
+USER www-data
