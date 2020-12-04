@@ -1,4 +1,4 @@
-FROM php:fpm-alpine
+FROM php:7-fpm-alpine
 
 LABEL Description="PHP FPM Docker image OPCache, APCu, Intl., PDO MySQL, MBString, and Yaml extensions." Vendor="Elliot J. Reed" Version="2.0"
 
