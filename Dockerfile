@@ -23,6 +23,8 @@ RUN apk add --update icu yaml imagemagick libgomp libmagic && \
     docker-php-ext-enable redis && \
     pecl install -o -f imagick && \
     docker-php-ext-enable imagick && \
+    pecl install -o -f excimer && \
+    docker-php-ext-enable excimer && \
     docker-php-source delete && \
     { find /usr/local/lib -type f -print0 | xargs -0r strip --strip-all -p 2>/dev/null || true; } && \
     apk del .build-dependencies && \
