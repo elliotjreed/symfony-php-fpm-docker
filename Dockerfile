@@ -1,4 +1,4 @@
-FROM php:8.2-fpm-alpine
+FROM php:8.3-fpm-alpine
 
 LABEL Description="PHP FPM Docker image with Redis, BCMath, OPCache, APCu, Intl., PDO MySQL, MBString, and Yaml extensions." Vendor="Elliot J. Reed" Version="3.0"
 
@@ -7,6 +7,7 @@ ENV TZ='Europe/London'
 RUN apk add --update --no-cache bzip2 libzip icu icu-data-full yaml freetype libwebp libpng libjpeg-turbo imagemagick imagemagick-heic imagemagick-jpeg imagemagick-jxl imagemagick-svg imagemagick-tiff imagemagick-webp libheif libgomp libmagic && \
     apk add --update --no-cache --virtual .build-dependencies \
         $PHPIZE_DEPS \
+        git \
         zlib-dev \
         icu-dev \
         icu-libs \
@@ -20,6 +21,16 @@ RUN apk add --update --no-cache bzip2 libzip icu icu-data-full yaml freetype lib
         libjpeg-turbo-dev \
         libpng-dev \
         bzip2-dev && \
+        git clone https://github.com/Imagick/imagick.git --depth 1 /tmp/imagick && \
+    cd /tmp/imagick && \
+    git fetch origin master && \
+    git switch master && \
+    cd /tmp/imagick && \
+    phpize && \
+    ./configure && \
+    make && \
+    make install && \
+    docker-php-ext-enable imagick && \
     docker-php-ext-configure intl && \
     docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp && \
     docker-php-ext-install bcmath pdo_mysql opcache intl fileinfo gd exif bz2 && \
@@ -29,8 +40,6 @@ RUN apk add --update --no-cache bzip2 libzip icu icu-data-full yaml freetype lib
     docker-php-ext-enable apcu && \
     pecl install -o -f redis &&  \
     docker-php-ext-enable redis && \
-    pecl install -o -f imagick && \
-    docker-php-ext-enable imagick && \
     pecl install -o -f excimer && \
     docker-php-ext-enable excimer && \
     pecl clear-cache && \
