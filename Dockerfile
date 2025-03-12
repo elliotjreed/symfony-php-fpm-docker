@@ -20,6 +20,7 @@ RUN apk add --update --no-cache bzip2 libzip icu icu-data-full yaml freetype lib
         freetype-dev \
         libjpeg-turbo-dev \
         libpng-dev \
+        libzip-dev \
         bzip2-dev && \
         git clone https://github.com/Imagick/imagick.git --depth 1 /tmp/imagick && \
     cd /tmp/imagick && \
@@ -33,7 +34,7 @@ RUN apk add --update --no-cache bzip2 libzip icu icu-data-full yaml freetype lib
     docker-php-ext-enable imagick && \
     docker-php-ext-configure intl && \
     docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp && \
-    docker-php-ext-install bcmath pdo_mysql opcache intl fileinfo gd exif bz2 && \
+    docker-php-ext-install bcmath pdo_mysql opcache intl fileinfo gd exif bz2 zip && \
     pecl install -o -f yaml && \
     docker-php-ext-enable yaml && \
     pecl install apcu && \
